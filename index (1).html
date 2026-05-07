@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>OJT Report – Pranav Dhekane</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue:        #2563EB;
+    --blue-light:  #3B82F6;
+    --violet:      #7C3AED;
+    --violet-light:#A78BFA;
+    --grad:        linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+    --grad-soft:   linear-gradient(135deg, #EFF6FF 0%, #F5F3FF 100%);
+    --ink:         #0F172A;
+    --ink-2:       #1E293B;
+    --muted:       #64748B;
+    --border:      #E2E8F0;
+    --card-bg:     #FFFFFF;
+    --bg:          #F8FAFC;
+    --shadow-sm:   0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md:   0 4px 16px rgba(15,23,42,.08), 0 1px 4px rgba(15,23,42,.04);
+    --shadow-lg:   0 12px 40px rgba(15,23,42,.10), 0 2px 8px rgba(15,23,42,.06);
+    --radius:      16px;
+    --radius-sm:   10px;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    overflow: hidden;
+  }
+
+  /* ── Slide wrapper ─────────────────────────────── */
+  .deck { width: 100vw; height: 100vh; position: relative; }
+
+  .slide {
+    display: none;
+    width: 100vw; height: 100vh;
+    position: absolute; inset: 0;
+    align-items: center; justify-content: center;
+    flex-direction: column;
+  }
+  .slide.active { display: flex; }
+
+  /* ── Navigation buttons ────────────────────────── */
+  .nav {
+    position: fixed; bottom: 32px; right: 36px;
+    display: flex; gap: 12px; z-index: 999;
+  }
+  .nav-btn {
+    padding: 10px 26px;
+    border: none; border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; letter-spacing: .3px;
+  }
+  .nav-btn.back {
+    background: var(--card-bg);
+    color: var(--muted);
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+  .nav-btn.back:hover { color: var(--ink); border-color: #CBD5E1; }
+  .nav-btn.next {
+    background: var(--grad);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(37,99,235,.30);
+  }
+  .nav-btn.next:hover { opacity: .92; }
+
+  /* Slide counter */
+  .counter {
+    position: fixed; bottom: 38px; left: 36px;
+    font-size: 12px; font-weight: 500; color: var(--muted);
+    letter-spacing: .5px; z-index: 999;
+  }
+
+  /* ─────────────────────────────────────────────────
+     SLIDE 1 – Cover
+  ───────────────────────────────────────────────── */
+  .s1 { background: var(--ink-2); color: #fff; }
+
+  .s1-inner {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    gap: 0;
+    width: 100%; height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* decorative background circles */
+  .s1-inner::before {
+    content: '';
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,.22) 0%, transparent 70%);
+    top: -200px; right: -180px;
+    pointer-events: none;
+  }
+  .s1-inner::after {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(37,99,235,.20) 0%, transparent 70%);
+    bottom: -150px; left: -120px;
+    pointer-events: none;
+  }
+
+  .s1-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50px;
+    padding: 6px 18px; margin-bottom: 36px;
+    font-size: 12px; font-weight: 500; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--violet-light);
+    position: relative; z-index: 1;
+  }
+  .s1-badge span { font-size: 16px; }
+
+  .s1-title {
+    font-size: clamp(56px, 8vw, 88px);
+    font-weight: 800; line-height: 1;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, #fff 40%, var(--violet-light) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative; z-index: 1;
+    margin-bottom: 24px;
+  }
+
+  .s1-divider {
+    width: 56px; height: 3px;
+    background: var(--grad);
+    border-radius: 4px;
+    margin: 0 auto 28px;
+    position: relative; z-index: 1;
+  }
+
+  .s1-name {
+    font-size: clamp(20px, 2.5vw, 26px);
+    font-weight: 600; letter-spacing: -.3px;
+    color: #fff; position: relative; z-index: 1;
+    margin-bottom: 6px;
+  }
+  .s1-college {
+    font-size: 14px; font-weight: 400; color: rgba(255,255,255,.55);
+    position: relative; z-index: 1; margin-bottom: 36px;
+  }
+
+  .s1-pills {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+    position: relative; z-index: 1;
+  }
+  .s1-pill {
+    padding: 7px 20px;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 50px;
+    font-size: 13px; font-weight: 400; color: rgba(255,255,255,.75);
+  }
+  .s1-pill strong { font-weight: 600; color: #fff; }
+
+  /* ─────────────────────────────────────────────────
+     SHARED – light slides layout
+  ───────────────────────────────────────────────── */
+  .s-light {
+    background: var(--bg);
+    padding: 60px 80px;
+  }
+
+  .slide-inner {
+    width: 100%; max-width: 1060px;
+    display: flex; flex-direction: column; gap: 0;
+  }
+
+  .slide-tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blue); margin-bottom: 10px;
+  }
+
+  .slide-heading {
+    font-size: clamp(36px, 4.5vw, 52px);
+    font-weight: 800; line-height: 1.08;
+    letter-spacing: -1.5px; color: var(--ink);
+    margin-bottom: 36px;
+  }
+
+  .slide-heading span {
+    background: var(--grad);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* horizontal rule accent */
+  .slide-rule {
+    width: 48px; height: 3px;
+    background: var(--grad);
+    border-radius: 4px;
+    margin-bottom: 32px;
+  }
+
+  /* ─────────────────────────────────────────────────
+     SLIDE 2 – Introduction
+  ───────────────────────────────────────────────── */
+  .s2-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .info-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 28px 30px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .info-card-icon {
+    width: 40px; height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--grad-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 4px;
+  }
+  .info-card-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .info-card-text {
+    font-size: 15px; font-weight: 400; color: var(--ink-2);
+    line-height: 1.6;
+  }
+  .info-card-text strong { font-weight: 600; color: var(--ink); }
+
+  /* ─────────────────────────────────────────────────
+     SLIDE 3 – What I Learned
+  ───────────────────────────────────────────────── */
+  .learn-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .learn-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 22px;
+    box-shadow: var(--shadow-sm);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .learn-card-num {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--grad);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .learn-card-title {
+    font-size: 15px; font-weight: 700; color: var(--ink);
+    line-height: 1.3;
+  }
+  .learn-card-body {
+    font-size: 13px; color: var(--muted); line-height: 1.55; font-weight: 400;
+  }
+
+  /* ─────────────────────────────────────────────────
+     SLIDES 4, 5, 6 – Project slides (two-column)
+  ───────────────────────────────────────────────── */
+  .project-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .project-left { display: flex; flex-direction: column; gap: 14px; }
+  .project-desc {
+    font-size: 15.5px; color: var(--ink-2); line-height: 1.7; font-weight: 400;
+  }
+  .project-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px;
+  }
+  .project-tag {
+    padding: 5px 14px;
+    background: var(--grad-soft);
+    border: 1px solid rgba(124,58,237,.12);
+    border-radius: 50px;
+    font-size: 12px; font-weight: 600;
+    color: var(--violet);
+  }
+
+  .img-placeholder {
+    width: 100%; aspect-ratio: 16/10;
+    background: linear-gradient(145deg, #F1F5F9, #EDE9FE);
+    border-radius: var(--radius);
+    border: 2px dashed rgba(124,58,237,.22);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 12px;
+    box-shadow: var(--shadow-md);
+  }
+  .img-placeholder-icon {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    background: rgba(124,58,237,.10);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+  }
+  .img-placeholder-text {
+    font-size: 13px; font-weight: 500; color: var(--muted);
+    letter-spacing: .2px;
+  }
+
+  
+  
+
+    .s6-screenshots {
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+    }
+    .mobile-placeholder {
+      width: 200px;
+      height: auto;
+      border: 1.5px dashed var(--beige);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--beige-light);
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      padding: 14px;
+    }
+
+  /* ─────────────────────────────────────────────────
+     SLIDE 7 – Skills
+  ───────────────────────────────────────────────── */
+  .skills-wrap {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    margin-top: 4px;
+  }
+  .skill-chip {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 22px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    box-shadow: var(--shadow-sm);
+    font-size: 14px; font-weight: 600; color: var(--ink-2);
+  }
+  .skill-chip-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--grad);
+    flex-shrink: 0;
+  }
+
+  /* ─────────────────────────────────────────────────
+     SLIDE 8 – Thank You
+  ───────────────────────────────────────────────── */
+  .s8 { background: var(--ink-2); color: #fff; }
+  .s8-inner {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; gap: 0;
+    width: 100%; height: 100%;
+    position: relative; overflow: hidden;
+  }
+  .s8-inner::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(37,99,235,.18) 0%, transparent 70%);
+    bottom: -200px; right: -100px;
+    pointer-events: none;
+  }
+  .s8-inner::after {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,.20) 0%, transparent 70%);
+    top: -160px; left: -80px;
+    pointer-events: none;
+  }
+  .s8-thank {
+    font-size: clamp(64px, 10vw, 110px);
+    font-weight: 900; line-height: 1;
+    letter-spacing: -3px;
+    background: linear-gradient(135deg, #fff 30%, var(--violet-light) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative; z-index: 1;
+    margin-bottom: 16px;
+  }
+  .s8-sub {
+    font-size: 16px; font-weight: 400;
+    color: rgba(255,255,255,.50); letter-spacing: .3px;
+    position: relative; z-index: 1; margin-bottom: 32px;
+  }
+  .s8-name {
+    font-size: clamp(18px, 2vw, 22px); font-weight: 600;
+    color: rgba(255,255,255,.90); letter-spacing: -.2px;
+    position: relative; z-index: 1;
+  }
+  .s8-divider {
+    width: 48px; height: 3px;
+    background: var(--grad); border-radius: 4px;
+    margin: 20px auto 20px;
+    position: relative; z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- ── SLIDE 1 ── Cover ──────────────────────── -->
+  <div class="slide s1 active">
+    <div class="s1-inner">
+      <div class="s1-badge"><span>📋</span> On-the-Job Training</div>
+      <div class="s1-title">OJT Report</div>
+      <div class="s1-divider"></div>
+      <div class="s1-name">Pranav Dhekane</div>
+      <div class="s1-college">MES Abasaheb Garware College, Pune</div>
+      <div class="s1-pills">
+        <div class="s1-pill"><strong>Company:</strong>&ensp;HealToFit</div>
+        <div class="s1-pill"><strong>Guide:</strong>&ensp;Ms. Pooja Kamthe</div>
+        <div class="s1-pill"><strong>AY:</strong>&ensp;2025–26</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 2 ── Introduction ───────────────── -->
+  <div class="slide s-light">
+    <div class="slide-inner">
+      <div class="slide-tag">01 / Overview</div>
+      <div class="slide-heading">Introduction<span>.</span></div>
+      <div class="slide-rule"></div>
+      <div class="s2-grid">
+        <div class="info-card">
+          <div class="info-card-icon">🔍</div>
+          <div class="info-card-label">How I Got Here</div>
+          <div class="info-card-text">Secured this internship <strong>independently</strong> through <strong>Indeed</strong>, demonstrating proactive job search and self-reliance in landing a technical role.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">🏢</div>
+          <div class="info-card-label">About HealToFit</div>
+          <div class="info-card-text">A <strong>Bangalore-based health-tech startup</strong> specializing in lifestyle disorder management, personalized diet planning, and <strong>Ayurvedic wellness</strong> solutions.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">💼</div>
+          <div class="info-card-label">My Role</div>
+          <div class="info-card-text">Joined as a <strong>Full Stack Developer Intern</strong>, contributing to both frontend and backend systems across multiple live product features.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">🎯</div>
+          <div class="info-card-label">Focus Area</div>
+          <div class="info-card-text">Worked across the full product stack — from server-side logic and APIs to UI rendering, notifications, and <strong>automated auditing pipelines</strong>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 3 ── What I Learned ─────────────── -->
+  <div class="slide s-light">
+    <div class="slide-inner">
+      <div class="slide-tag">02 / Growth</div>
+      <div class="slide-heading">What I <span>Learned</span></div>
+      <div class="slide-rule"></div>
+      <div class="learn-grid">
+        <div class="learn-card">
+          <div class="learn-card-num">01</div>
+          <div class="learn-card-title">Production Full Stack Dev</div>
+          <div class="learn-card-body">Worked on a live, customer-facing application — experiencing real deployment cycles and production constraints.</div>
+        </div>
+        <div class="learn-card">
+          <div class="learn-card-num">02</div>
+          <div class="learn-card-title">Node.js, Express & EJS</div>
+          <div class="learn-card-body">Built server-side features using the full MVC pipeline with templating, routing, middleware, and REST APIs.</div>
+        </div>
+        <div class="learn-card">
+          <div class="learn-card-num">03</div>
+          <div class="learn-card-title">SCSS & Styling Systems</div>
+          <div class="learn-card-body">Implemented structured, maintainable styling using SCSS variables, nesting, and modular architecture.</div>
+        </div>
+        <div class="learn-card">
+          <div class="learn-card-num">04</div>
+          <div class="learn-card-title">Debugging Real Issues</div>
+          <div class="learn-card-body">Diagnosed and resolved complex production bugs under real constraints — far beyond classroom-level debugging.</div>
+        </div>
+        <div class="learn-card">
+          <div class="learn-card-num">05</div>
+          <div class="learn-card-title">System Architecture</div>
+          <div class="learn-card-body">Understood how large codebases are structured, how services communicate, and how features fit into the bigger picture.</div>
+        </div>
+        <div class="learn-card">
+          <div class="learn-card-num">06</div>
+          <div class="learn-card-title">PWA & Service Workers</div>
+          <div class="learn-card-body">Explored Progressive Web App concepts, caching strategies, and background sync for offline-capable experiences.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 4 ── Web Push Notifications ──────── -->
+  <div class="slide s-light">
+    <div class="slide-inner">
+      <div class="slide-tag">03 / Project</div>
+      <div class="slide-heading">Web Push <span>Notification</span> Module</div>
+      <div class="slide-rule"></div>
+      <div class="project-layout">
+        <div class="project-left">
+          <div class="project-desc">
+            Designed and implemented an end-to-end <strong>Web Push Notification system</strong> integrated into HealToFit's platform. The module handles subscription management, server-sent push events, and delivery tracking — enabling the product to re-engage users with health reminders, diet alerts, and wellness nudges in real time.
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">Node.js</span>
+            <span class="project-tag">Web Push API</span>
+            <span class="project-tag">Service Workers</span>
+            <span class="project-tag">PWA</span>
+            <span class="project-tag">VAPID</span>
+          </div>
+        </div>
+        <img src="web.png" alt="" class="img-placeholder"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 5 ── Puppeteer & Lighthouse ──────── -->
+  <div class="slide s-light">
+    <div class="slide-inner">
+      <div class="slide-tag">04 / Project</div>
+      <div class="slide-heading">Puppeteer <span>Automation</span> & Lighthouse</div>
+      <div class="slide-rule"></div>
+      <div class="project-layout">
+        <div class="project-left">
+          <div class="project-desc">
+            Built an automated performance auditing pipeline using <strong>Puppeteer</strong> and <strong>Google Lighthouse</strong>. The system headlessly navigates pages, runs Lighthouse audits, and generates structured performance reports — allowing the team to continuously monitor Core Web Vitals and identify bottlenecks without manual testing.
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">Puppeteer</span>
+            <span class="project-tag">Google Lighthouse</span>
+            <span class="project-tag">Node.js</span>
+            <span class="project-tag">Automation</span>
+            <span class="project-tag">Performance</span>
+          </div>
+        </div>
+        <img src="Gemini_Generated_Image_a2znmoa2znmoa2zn.png" alt="" class="img-placeholder"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 6 ── Quiz Module ──────────────────── -->
+  <div class="slide s-light">
+    <div class="slide-inner">
+      <div class="slide-tag">05 / Project</div>
+      <div class="slide-heading">Quiz Module <span>Development</span></div>
+      <div class="slide-rule"></div>
+      <div class="project-layout">
+        <div class="project-left">
+          <div class="project-desc">
+            Developed a fully functional <strong>interactive quiz module</strong> for the HealToFit platform, enabling users to take health and wellness assessments. Built question flow logic, scoring, result rendering, and backend data persistence — contributing directly to user engagement and health profiling within the app.
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">Node.js</span>
+            <span class="project-tag">Express.js</span>
+            <span class="project-tag">EJS</span>
+            <span class="project-tag">SCSS</span>
+            <span class="project-tag">REST APIs</span>
+          </div>
+        </div>
+        <!-- <div class="img-placeholder">
+          <div class="img-placeholder-icon">🖼️</div>
+          <div class="img-placeholder-text">Replace with project image</div>
+        </div> -->
+        
+      <div class="s6-screenshots">
+        <img src="image1.png" alt="" class="mobile-placeholder">
+        <img src="image2.png" alt="" class="mobile-placeholder">
+        <img src="image.png" alt="" class="mobile-placeholder">
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 7 ── Skills ───────────────────────── -->
+  <div class="slide s-light">
+    <div class="slide-inner">
+      <div class="slide-tag">06 / Takeaways</div>
+      <div class="slide-heading">Skills <span>Developed</span></div>
+      <div class="slide-rule"></div>
+      <div class="skills-wrap">
+        <div class="skill-chip"><span class="skill-chip-dot"></span> Node.js</div>
+        <div class="skill-chip"><span class="skill-chip-dot"></span> Express.js</div>
+        <div class="skill-chip"><span class="skill-chip-dot"></span> EJS Templating</div>
+        <div class="skill-chip"><span class="skill-chip-dot"></span> SCSS</div>
+        <div class="skill-chip"><span class="skill-chip-dot"></span> Puppeteer</div>
+        <div class="skill-chip"><span class="skill-chip-dot"></span> Google Lighthouse</div>
+        <div class="skill-chip"><span class="skill-chip-dot"></span> PWA</div>
+        <div class="skill-chip"><span class="skill-chip-dot"></span> Service Workers</div>
+        <div class="skill-chip"><span class="skill-chip-dot"></span> Git & Version Control</div>
+        <div class="skill-chip"><span class="skill-chip-dot"></span> Debugging</div>
+        <div class="skill-chip"><span class="skill-chip-dot"></span> Code Optimization</div>
+        <div class="skill-chip"><span class="skill-chip-dot"></span> REST API Design</div>
+        <div class="skill-chip"><span class="skill-chip-dot"></span> Web Push API</div>
+        <div class="skill-chip"><span class="skill-chip-dot"></span> Performance Auditing</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 8 ── Thank You ────────────────────── -->
+  <div class="slide s8">
+    <div class="s8-inner">
+      <div class="s8-sub">OJT Report · HealToFit · 2025–26</div>
+      <div class="s8-thank">Thank You</div>
+      <div class="s8-divider"></div>
+      <div class="s8-name">Pranav Dhekane</div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- Slide counter -->
+<div class="counter" id="counter">1 / 8</div>
+
+<!-- Navigation -->
+<div class="nav">
+  <button class="nav-btn back" onclick="changeSlide(-1)">← Back</button>
+  <button class="nav-btn next" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var counter = document.getElementById('counter');
+
+  function showSlide(n) {
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  function changeSlide(dir) {
+    showSlide(current + dir);
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   changeSlide(-1);
+  });
+</script>
+</body>
+</html>
